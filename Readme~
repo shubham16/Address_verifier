@@ -1,0 +1,37 @@
+This is an Address verifier program that currently only supports Indian addresses.
+Some Indian addresses can still not be detected mainly because I am not too sure about whether the pincode database that I got from govt of India website is complete(govt websites, right).
+
+It takes input from the file address.txt.The input format is to be specified as:
+Line 1: Street name/ Apt Number
+Line 2: City name
+LIne 3: State name
+Line 4: Pincode
+
+The program uses a pincode database that maps pincode to the respective city.This information is stored in pincode.csv file.
+The algorithm that is used involves the following steps:
+
+1.Find the given pincode in the pincode database.If this pinocode doesn't exist, then this is an invalid address, else proceed further.
+2.Store the city corresponding to the pincode.
+3.Now the program parses the string address and hits the google geocode api to retrieve a json file.
+4.This json file stores all the data related to that address.Now the program just retrieves the city name from json file.If both the city names match only then it is a valid address.
+
+Eg. If input is 
+Sector 10
+Gurgaon 
+Faridabad
+122001
+
+then after string parsing the program will hit this url:
+https://maps.googleapis.com/maps/api/geocode/json?address=Sector+10++Gurgaon+key=AIzaSyCk05HoXI0NyBl2dVclxm3NOXNKIn-ck-4
+
+Uses:
+One use could be in address verification of fraudulent users on e-commerce websites.
+I ran this program on a lot of test cases that even big e-commerce websites failed to detect correctly and placed the order for the city.
+
+Eg. 
+Sector 121
+Faridabad
+Haryana
+121001
+There is no sector 121 in faridabad, haryana but e-commerce websites placed my order for this address.
+On running the program for this test case, we get Invalid address.
